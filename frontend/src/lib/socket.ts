@@ -6,7 +6,7 @@ let fullContent: string = "";
 let pythonContent: string = "";
 
 
-const socket: ReturnType<typeof io> = io("ws://localhost:3000");
+const socket: ReturnType<typeof io> = io("ws://xlr8.online");
 
 export const messages = writable<{ sender: "user" | "ai"; text: string }[]>([]);
 export const pythonCode = writable<string>("");
