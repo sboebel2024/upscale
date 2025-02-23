@@ -24,8 +24,9 @@ const httpServer = createServer(app);
 
 const io = new Server(httpServer, {
     cors: {
-        origin: "*",
-        methods: ["GET", "POST"]
+      origin: ["https://xlr8.online", "http://localhost:5173"], // Allow both development and production origins
+      methods: ["GET", "POST"],
+      credentials: true
     }
 });
 

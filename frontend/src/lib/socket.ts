@@ -6,7 +6,10 @@ let fullContent: string = "";
 let pythonContent: string = "";
 
 
-const socket: ReturnType<typeof io> = io("ws://xlr8.online");
+const socket: ReturnType<typeof io> = io("https://xlr8.online", {
+                                            transports: ["websocket", "polling"], // Ensure proper transports
+                                            secure: true
+                                        });
 
 export const messages = writable<{ sender: "user" | "ai"; text: string }[]>([]);
 export const pythonCode = writable<string>("");
