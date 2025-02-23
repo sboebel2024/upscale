@@ -114,146 +114,154 @@
     
 </script>
 
-<h1 class="text-2xl font-bold text-center mt-6">upscaled</h1>
+<div class="flex flex-col min-h-screen">
 
-<div class="flex md:flex-row flex-col flex-wrap gap-4 mt-6 items-start">
-    <!-- Left Column -->
-    <div class="flex flex-col space-y-4" style="flex: 1; max-width: 50%;">
-        <div class="chat p-4 bg-gray-100 rounded-lg shadow-lg h-116 overflow-y-auto" style="margin-left:10px">
-            <h2 class="text-l font-semibold">you &lt;&gt; gpt</h2>
-            {#each $messages as msg}
-              <div
-                class="{msg.sender === 'user' ? 'text-right text-blue-600' : 'text-left text-green-600'} my-2"
-              >
-                <strong>{msg.sender === "user" ? "you" : "gpt"}:</strong>
-                <div class="markdown-content">
-                  {@html marked(msg.text.replace("```", ""))}
+    <main class="flex-grow">
+
+        <h1 class="text-2xl font-bold text-center mt-6">upscaled</h1>
+
+        <div class="flex md:flex-row flex-col flex-wrap gap-4 mt-6 items-start">
+            <!-- Left Column -->
+            <div class="flex flex-col space-y-4" style="flex: 1; max-width: 50%;">
+                <div class="chat p-4 bg-gray-100 rounded-lg shadow-lg h-116 overflow-y-auto" style="margin-left:10px">
+                    <h2 class="text-l font-semibold">you &lt;&gt; gpt</h2>
+                    {#each $messages as msg}
+                    <div
+                        class="{msg.sender === 'user' ? 'text-right text-blue-600' : 'text-left text-green-600'} my-2"
+                    >
+                        <strong>{msg.sender === "user" ? "you" : "gpt"}:</strong>
+                        <div class="markdown-content">
+                        {@html marked(msg.text.replace("```", ""))}
+                        </div>
+                    </div>
+                    {/each}
                 </div>
-              </div>
-            {/each}
-        </div>
-        <div class="flex items-center space-x-2">
-            <input
-                bind:value={userInput}
-                placeholder="type a message..."
-                on:keydown={handleKeyDown}
-                class="w-full p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400" style="margin-left:10px"
-            />
-            <button
-                on:click={handleSend}
-                class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition cursor-pointer"
-            >
-                send
-            </button>
-        </div>
-    </div>
-
-    <!-- Right Column -->
-    <div class="flex flex-col space-y-4" style="flex: 1; max-width: 50%;">
-        <!-- <div class="bg-gray-900 text-white p-4 rounded-lg shadow-md overflow-y-auto whitespace-pre-wrap font-mono" style="height: 20rem;">
-            <h2 class="text-l font-semibold">Generated Python Code</h2>
-            <pre>{$pythonCode}</pre>
-        </div> -->
-        <div class="bg-gray-900 text-white p-1 rounded-lg shadow-md h-32 overflow-hidden" style="height: 20rem; margin-right:10px">
-            <h2 class="text-l font-semibold p-2">generated python code</h2>
-            <div bind:this={editorContainer} class="w-full h-full"></div>
-        </div>
-        <div class="bg-gray-900 text-white p-2 rounded-lg shadow-md h-32 overflow-y-auto" style="margin-right:10px">
-            <h3 class="text-l font-semibold p-1">output terminal</h3>
-            <pre>{$errorLog}</pre>
-        </div>
-        <div class="flex flex-row space-x-5">
-            <div class="relative group">
-                {#if $stepFileUrl}
-                    <a
-                        href={$stepFileUrl}
-                        download={$stepFileUrl.split('/').pop() || 'download.step'}
-                        class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center justify-center"
-                    >
-                        3mf
-                    </a>
-                {:else}
+                <div class="flex items-center space-x-2">
+                    <input
+                        bind:value={userInput}
+                        placeholder="type a message..."
+                        on:keydown={handleKeyDown}
+                        class="w-full p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400" style="margin-left:10px"
+                    />
                     <button
-                        disabled
-                        class="px-4 py-2 bg-gray-400 text-white rounded-lg cursor-not-allowed"
+                        on:click={handleSend}
+                        class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition cursor-pointer"
                     >
-                        3mf
+                        send
                     </button>
-                {/if}
-                <span class="absolute top-full mb-2 left-1/2 transform -translate-x-1/2 px-2 py-1 text-sm text-white bg-gray-800 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                    download
-                </span>
+                </div>
             </div>
-            <div class="relative group">
-                {#if $stepFileUrl}
-                    <a
-                        href={$stepFileUrl.replace("3mf", "stl")}
-                        download={$stepFileUrl.replace("3mf", "stl").split('/').pop() || 'download.step'}
-                        class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center justify-center"
-                    >
-                        stl
-                    </a>
-                {:else}
-                    <button
-                        disabled
-                        class="px-4 py-2 bg-gray-400 text-white rounded-lg cursor-not-allowed"
-                    >
-                        stl
-                    </button>
-                {/if}
-                <span class="absolute top-full mb-2 left-1/2 transform -translate-x-1/2 px-2 py-1 text-sm text-white bg-gray-800 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                    download
-                </span>
-            </div>
-            <div class="relative group">
-                {#if $stepFileUrl}
-                    <a
-                        href={$stepFileUrl.replace("3mf", "step")}
-                        download={$stepFileUrl.replace("3mf", "step").split('/').pop() || 'download.step'}
-                        class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center justify-center"
-                    >
-                        step
-                    </a>
-                {:else}
-                    <button
-                        disabled
-                        class="px-4 py-2 bg-gray-400 text-white rounded-lg cursor-not-allowed"
-                    >
-                        step
-                    </button>
-                {/if}
-                <span class="absolute top-full mb-2 left-1/2 transform -translate-x-1/2 px-2 py-1 text-sm text-white bg-gray-800 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                    download
-                </span>
-            </div>
-            <button
-                on:click={handleRun}
-                class="flex-grow px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition flex items-center justify-center cursor-pointer" style="margin-right:10px"
 
-            >
-                run
-            </button>
+            <!-- Right Column -->
+            <div class="flex flex-col space-y-4" style="flex: 1; max-width: 50%;">
+                <!-- <div class="bg-gray-900 text-white p-4 rounded-lg shadow-md overflow-y-auto whitespace-pre-wrap font-mono" style="height: 20rem;">
+                    <h2 class="text-l font-semibold">Generated Python Code</h2>
+                    <pre>{$pythonCode}</pre>
+                </div> -->
+                <div class="bg-gray-900 text-white p-1 rounded-lg shadow-md h-32 overflow-hidden" style="height: 20rem; margin-right:10px">
+                    <h2 class="text-l font-semibold p-2">generated python code</h2>
+                    <div bind:this={editorContainer} class="w-full h-full"></div>
+                </div>
+                <div class="bg-gray-900 text-white p-2 rounded-lg shadow-md h-32 overflow-y-auto" style="margin-right:10px">
+                    <h3 class="text-l font-semibold p-1">output terminal</h3>
+                    <pre>{$errorLog}</pre>
+                </div>
+                <div class="flex flex-row space-x-5">
+                    <div class="relative group">
+                        {#if $stepFileUrl}
+                            <a
+                                href={$stepFileUrl}
+                                download={$stepFileUrl.split('/').pop() || 'download.step'}
+                                class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center justify-center"
+                            >
+                                3mf
+                            </a>
+                        {:else}
+                            <button
+                                disabled
+                                class="px-4 py-2 bg-gray-400 text-white rounded-lg cursor-not-allowed"
+                            >
+                                3mf
+                            </button>
+                        {/if}
+                        <span class="absolute top-full mb-2 left-1/2 transform -translate-x-1/2 px-2 py-1 text-sm text-white bg-gray-800 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            download
+                        </span>
+                    </div>
+                    <div class="relative group">
+                        {#if $stepFileUrl}
+                            <a
+                                href={$stepFileUrl.replace("3mf", "stl")}
+                                download={$stepFileUrl.replace("3mf", "stl").split('/').pop() || 'download.step'}
+                                class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center justify-center"
+                            >
+                                stl
+                            </a>
+                        {:else}
+                            <button
+                                disabled
+                                class="px-4 py-2 bg-gray-400 text-white rounded-lg cursor-not-allowed"
+                            >
+                                stl
+                            </button>
+                        {/if}
+                        <span class="absolute top-full mb-2 left-1/2 transform -translate-x-1/2 px-2 py-1 text-sm text-white bg-gray-800 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            download
+                        </span>
+                    </div>
+                    <div class="relative group">
+                        {#if $stepFileUrl}
+                            <a
+                                href={$stepFileUrl.replace("3mf", "step")}
+                                download={$stepFileUrl.replace("3mf", "step").split('/').pop() || 'download.step'}
+                                class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center justify-center"
+                            >
+                                step
+                            </a>
+                        {:else}
+                            <button
+                                disabled
+                                class="px-4 py-2 bg-gray-400 text-white rounded-lg cursor-not-allowed"
+                            >
+                                step
+                            </button>
+                        {/if}
+                        <span class="absolute top-full mb-2 left-1/2 transform -translate-x-1/2 px-2 py-1 text-sm text-white bg-gray-800 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            download
+                        </span>
+                    </div>
+                    <button
+                        on:click={handleRun}
+                        class="flex-grow px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition flex items-center justify-center cursor-pointer" style="margin-right:10px"
 
+                    >
+                        run
+                    </button>
+
+                </div>
+                
+            </div>
+        </div>
+
+        <!-- 🏗️ 3D Model Viewer Section -->
+        <h2 class="text-2xl font-semibold text-center mt-10 text-gray-700">Geneerated 3D Model</h2>
+        {#if $stepFileUrl}
+        <StepViewer stlFileUrl={`${$stepFileUrl}?cache_buster=${Date.now()}`} />
+        {:else}
+        <p class="text-center text-gray-500 mt-4">You haven't rendered a file yet.</p>
+        {/if}
+
+    </main>
+
+
+    <footer class="w-screen bg-gray-800 text-white py-6 mt-10">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0">
+        
+        <!-- Left Section: Copyright -->
+        <div class="text-sm">
+            made by spencer boebel & nicholas stone @ georgia tech
         </div>
         
-    </div>
+    </footer>
+
 </div>
-
-<!-- 🏗️ 3D Model Viewer Section -->
-<h2 class="text-2xl font-semibold text-center mt-10 text-gray-700">Geneerated 3D Model</h2>
-{#if $stepFileUrl}
-  <StepViewer stlFileUrl={`${$stepFileUrl}?cache_buster=${Date.now()}`} />
-{:else}
-  <p class="text-center text-gray-500 mt-4">You haven't rendered a file yet.</p>
-{/if}
-
-
-<footer class="w-screen bg-gray-800 text-white py-6 mt-10">
-    <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0">
-      
-      <!-- Left Section: Copyright -->
-      <div class="text-sm">
-        made by spencer boebel & nicholas stone @ georgia tech
-      </div>
-      
-</footer>
