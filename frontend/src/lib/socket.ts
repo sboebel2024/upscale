@@ -14,7 +14,7 @@ export const stepFileUrl = writable<string | null>(null);
 export const viewerBuffer = writable<boolean>(false);
 export const errorLog = writable<string>("");
 
-const backendURL = process.env.BACKEND_URL || "http://localhost:3000";
+const backendURL = process.env.BACKEND_URL || "https://xlr8.online";
 
 export function sendMessageToAI(message: string) {
     messages.update((msgs) => [...msgs, { sender: "user",  text: message }]);
