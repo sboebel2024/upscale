@@ -11,6 +11,9 @@ RUN npm install
 # Copy the rest of the project files
 COPY . .
 
+ARG BACKEND_URL
+ENV BACKEND_URL=${BACKEND_URL}
+
 RUN npm run build
 
 # NEW: List the contents of /app after the build for debugging

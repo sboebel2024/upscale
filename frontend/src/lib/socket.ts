@@ -14,6 +14,8 @@ export const stepFileUrl = writable<string | null>(null);
 export const viewerBuffer = writable<boolean>(false);
 export const errorLog = writable<string>("");
 
+const backendURL = process.env.BACKEND_URL || "http://localhost:3000";
+
 export function sendMessageToAI(message: string) {
     messages.update((msgs) => [...msgs, { sender: "user",  text: message }]);
     socket.emit("message", {message});
@@ -59,7 +61,7 @@ socket.on("python_delta", (data: {content: string}) => {
 
 socket.on("stepFilePath", (data: {content: string}) => {
     const stepFilename = data.content;  
-    const url = `http://localhost:3000/generated-files/${stepFilename}`;
+    const url = `${backendURL}/generated-files/${stepFilename}`;
     stepFileUrl.set(url);
 });
 
