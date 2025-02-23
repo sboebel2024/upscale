@@ -118,7 +118,7 @@
 
     <main class="flex-grow">
 
-        <h1 class="text-2xl font-bold text-center mt-6">upscaled</h1>
+        <h1 class="text-2xl font-bold text-center mt-6">upscaled ~ generate cad with ai</h1>
 
         <div class="flex md:flex-row flex-col flex-wrap gap-4 mt-6 items-start">
             <!-- Left Column -->
@@ -244,7 +244,7 @@
         </div>
 
         <!-- 🏗️ 3D Model Viewer Section -->
-        <h2 class="text-2xl font-semibold text-center mt-10 text-gray-700">Geneerated 3D Model</h2>
+        <h2 class="text-2xl font-semibold text-center mt-10 text-gray-700">Generated 3D Model</h2>
         {#if $stepFileUrl}
         <StepViewer stlFileUrl={`${$stepFileUrl}?cache_buster=${Date.now()}`} />
         {:else}
