@@ -1,0 +1,29 @@
+# Node modules
+node_modules
+npm-debug.log
+
+# Build artifacts
+.svelte-kit
+build
+dist
+output
+
+# Environment files
+.env
+.env.*
+
+# Logs
+logs
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+
+# IDE/Editor settings
+.vscode
+.idea

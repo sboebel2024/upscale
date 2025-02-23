@@ -370,6 +370,6 @@ io.on("connection", (socket: Socket) => {
 });
 
 const PORT = 3000;
-httpServer.listen(PORT, () => {
+httpServer.listen(PORT, "0.0.0.0", () => {
     console.log(`🚀 WebSocket Server Running on port ${PORT}...`);
 });

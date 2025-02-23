@@ -114,7 +114,7 @@
     
 </script>
 
-<h1 class="text-2xl font-bold text-center mt-6">upscale</h1>
+<h1 class="text-2xl font-bold text-center mt-6">upscaled</h1>
 
 <div class="flex md:flex-row flex-col flex-wrap gap-4 mt-6 items-start">
     <!-- Left Column -->
